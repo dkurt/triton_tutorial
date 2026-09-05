@@ -1,0 +1,4 @@
+__pycache__/
+*.pyc
+.venv/
+assets/video_ocr_result.mp4

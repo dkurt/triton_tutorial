@@ -1,0 +1,7 @@
+# Build context excludes: the local venv is HUGE (uv re-creates one inside the
+# image), git metadata and caches are never needed by the Docker build.
+.venv/
+.git/
+__pycache__/
+*.pyc
+uv.lock.tmp
