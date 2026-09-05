@@ -1,0 +1,36 @@
+services:
+  triton:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: triton-minimal-demo
+    networks:
+      - default
+    command:
+      - /opt/tritonserver/bin/tritonserver
+      - --model-repository=/model_repository
+      - --http-port=8000
+      - --grpc-port=8001
+      - --metrics-port=8002
+      - --model-control-mode=explicit
+      - --strict-readiness=True
+      - --load-model=easyocr
+      - --load-model=video_ocr
+      - --load-model=vehicle_detector
+    volumes:
+      - ./model_repository:/model_repository
+    ports:
+      - "18000:8000"   # HTTP  (used by the clients)
+      - "18001:8001"   # gRPC
+      - "18002:8002"   # metrics
+    shm_size: 2gb
+    gpus: all
+
+# Explicit subnet: this host's Docker daemon has exhausted all default address
+# pools, so binding a known range lets the network actually be created.
+networks:
+  default:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.28.0.0/16
