@@ -13,5 +13,11 @@ dependencies = [
     "transformers>=4.56.0",
 ]
 
+[dependency-groups]
+dev = [
+    "pytest",
+    "pytest-timeout",
+]
+
 [tool.uv]
 package = false
