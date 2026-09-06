@@ -29,3 +29,8 @@ parameters: {
   key: "EXECUTION_ENV_PATH",
   value: {string_value: "/opt/triton-demo/venv"}
 }
+
+parameters: {
+  key: "skip_every_frame",
+  value: {string_value: "0"}
+}

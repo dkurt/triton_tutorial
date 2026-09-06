@@ -28,6 +28,7 @@ class TestVideoOcr:
             MODEL_NAME,
             inputs=[video_in],
             outputs=[InferRequestedOutput(OUTPUT_NAME)],
+            parameters={"skip_every_frame": "4"}
         )
 
         results = json.loads(output.as_numpy(OUTPUT_NAME)[0])

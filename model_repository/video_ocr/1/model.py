@@ -80,7 +80,10 @@ class TritonPythonModel:
         for request in requests:
             video_bytes = pb_utils.get_input_tensor_by_name(request, "video").as_numpy().tobytes()
 
-            names = await self._process_video(video_bytes)
+            params = json.loads(request.parameters())
+            skip_every_frame = int(params.get("skip_every_frame", "0"))
+
+            names = await self._process_video(video_bytes, skip_every_frame)
 
             responses.append(
                 pb_utils.InferenceResponse(
@@ -91,9 +94,7 @@ class TritonPythonModel:
             )
         return responses
 
-    async def _process_video(
-        self, raw_video: bytes
-    ) -> np.ndarray:
+    async def _process_video(self, raw_video: bytes, skip_every_frame: int) -> np.ndarray:
         """Decode the video, run vehicle detection + OCR on each frame, keep
         the unique set of recognized texts."""
         tasks = []
@@ -104,10 +105,14 @@ class TritonPythonModel:
             cap = cv.VideoCapture(tmp.name, cv.CAP_FFMPEG)
             if not cap.isOpened():
                 raise RuntimeError("server failed to decode the uploaded video")
+            frame_idx = 0
             while True:
                 ok, frame = cap.read()
+                frame_idx += 1
                 if not ok:
                     break
+                if skip_every_frame and frame_idx % skip_every_frame == 0:
+                    continue
                 tasks.append(asyncio.create_task(self._process_frame(frame)))
                 # Let async tasks run
                 if len(tasks) % 4 == 0:

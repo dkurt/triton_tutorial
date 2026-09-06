@@ -25,6 +25,4 @@ def client() -> Generator[InferenceServerClient, Any, None]:
 @pytest.fixture(scope="session")
 def car_video() -> np.ndarray:
     video_path = Path(os.environ["VIDEO_PATH"])
-    if not video_path.is_file():
-        pytest.skip(f"video not found: {video_path!r}")
     return np.fromfile(video_path, dtype=np.uint8).reshape(1, -1)
