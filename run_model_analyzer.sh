@@ -16,6 +16,6 @@ docker run  --gpus all --net=host \
     --triton-metrics-url=http://0.0.0.0:18002/metrics \
     --output-model-repository-path /model_analyzer/results/video_ocr \
     --override-output-model-repository \
-    --export-path profile_results \
-    --perf-analyzer-timeout=1800 \
+    --export-path /model_analyzer/profile_results \
+    --perf-analyzer-timeout=600 \
     --run-config-search-max-model-batch-size 1
