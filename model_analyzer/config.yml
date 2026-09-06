@@ -1,4 +1,4 @@
 perf_analyzer_flags:
   input-data: /model_analyzer/inputs
-  shape: video:17347551
+  shape: video:18535961
 bls_composing_models: easyocr,vehicle_detector

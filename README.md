@@ -9,7 +9,7 @@ pytest run tests
 ```
 
 ## Model analyzer
-1. Copy test video to `model_analyzer/inputs` with name `video` and no extension.
+1. Download [test video](https://drive.google.com/file/d/14oplAtMYRqmGexvrG72q46b6Rytrgwhk/view?usp=drive_link) to `model_analyzer/inputs` with name `video` and no extension.
 2. Launch server as usual `docker compose up`
 3. Run `bash run_model_analyzer.sh`
 
