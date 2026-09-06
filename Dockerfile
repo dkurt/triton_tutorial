@@ -14,6 +14,6 @@ RUN pip install --break-system-packages uv \
 # of block-downloading them over the network (which hangs server readiness).
 RUN mkdir -p /opt/easyocr-models \
     && . /opt/triton-demo/venv/bin/activate \
-    && python -c "import easyocr; easyocr.Reader(['ru'], gpu=False, detect_network='craft', recog_network='cyrillic_g2', download_enabled=True, model_storage_directory='/opt/easyocr-models')"
+    && python -c "import easyocr; easyocr.Reader(['en'], gpu=False, download_enabled=True, model_storage_directory='/opt/easyocr-models')"
 
 COPY model_repository /model_repository

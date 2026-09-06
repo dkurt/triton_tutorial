@@ -27,17 +27,15 @@ class TritonPythonModel:
         # staged locally (see the Dockerfile); network download stays disabled
         # so model init can never block server startup on the network.
         self.reader = easyocr.Reader(
-            ["ru"],
+            ["en"],
             gpu=False if self.device.startswith("cpu") else self.device,
-            detect_network="craft",
-            recog_network="cyrillic_g2",
             download_enabled=False,
             model_storage_directory="/opt/easyocr-models",
         )
 
         chars = self.reader.lang_char
         whitelist = (
-            "АВЕКМНОРСТУХ0123456789"
+            "[]ABEKMHOPCTYX0123456789"
         )
         self.allowlist = "".join(sorted(set(chars).intersection(set(whitelist))))
 

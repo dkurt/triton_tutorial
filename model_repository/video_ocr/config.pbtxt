@@ -1,7 +1,7 @@
 name: "video_ocr"
 backend: "python"
 
-max_batch_size: 0
+max_batch_size: 1
 instance_group [
   {
     count: 1
