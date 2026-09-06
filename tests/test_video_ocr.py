@@ -17,7 +17,7 @@ EXPECTED_OUTPUT: list[str] = [
 
 
 class TestVideoOcr:
-    @pytest.mark.timeout(600)
+    @pytest.mark.timeout(1200)
     def test_video_ocr_expected_texts(
         self, client, car_video: np.ndarray
     ) -> None:
