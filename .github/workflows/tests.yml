@@ -14,9 +14,30 @@ jobs:
 
       - name: Start server
         run: |
-          docker compose up --build -d &
-          sleep 30
+          sed -i '/gpus: all/d' docker-compose.yml
+          sed -i 's/KIND_GPU/KIND_CPU/g' model_repository/*/config.pbtxt
+          docker compose up --build -d
 
-      # - name: Run tests
-      #   run: |
-      #     pytest run tests
+      - name: Install dependencies
+        run: |
+          python3 -m pip install --upgrade pip
+          python3 -m pip install gdown uv
+          gdown https://drive.google.com/uc?id=14oplAtMYRqmGexvrG72q46b6Rytrgwhk
+
+      - name: Wait for Triton server to be ready
+        run: |
+          for i in $(seq 1 20); do
+            if curl -fsS http://0.0.0.0:18000/v2/health/ready; then
+              exit 0
+            fi
+            sleep 5
+          done
+          exit 1
+
+      - name: Run tests
+        run: |
+          uv sync --only-dev
+          uv run pytest tests
+        env:
+          SERVER_URL: 0.0.0.0:18000
+          VIDEO_PATH: cars_video.mp4
