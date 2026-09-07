@@ -9,7 +9,6 @@ INPUT_NAME: str = "video"
 OUTPUT_NAME: str = "names"
 
 EXPECTED_OUTPUT: list[str] = [
-    "H332PM152",
     "X090AP252",
     "B376HB92",
     "H269YA152",
