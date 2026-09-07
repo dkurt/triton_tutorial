@@ -37,7 +37,7 @@ jobs:
       - name: Run tests
         run: |
           uv sync --only-dev
-          uv run pytest tests
+          uv run pytest -v tests
         env:
           SERVER_URL: 0.0.0.0:18000
           VIDEO_PATH: cars_video.mp4

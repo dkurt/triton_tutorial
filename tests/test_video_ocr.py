@@ -32,4 +32,5 @@ class TestVideoOcr:
 
         results = json.loads(output.as_numpy(OUTPUT_NAME)[0])
 
+        print(results)
         assert all(number in results for number in EXPECTED_OUTPUT), results
