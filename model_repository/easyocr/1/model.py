@@ -35,7 +35,7 @@ class TritonPythonModel:
 
         chars = self.reader.lang_char
         whitelist = (
-            "[]|IABEKMHOPCTYX0123456789"
+            "[]ABEKMHOPCTYX0123456789"
         )
         self.allowlist = "".join(sorted(set(chars).intersection(set(whitelist))))
 
