@@ -1,6 +1,7 @@
 import asyncio
 import tempfile
 from typing import List
+import json
 
 import numpy as np
 import cv2 as cv
@@ -114,12 +115,21 @@ class TritonPythonModel:
             cap.release()
 
         results = await asyncio.gather(*tasks)
-        unique = list({text: None for texts in results for text in texts}.keys())
 
-        if not unique:
-            return np.zeros((0,), dtype="S1")
+        plates = set()
+        for result in results:
+            for text in result:
+                text = list(text.decode("utf-8").replace("[", "").replace("]", "").upper())
+                for i in [1, 2, 3]:
+                    if text[i] == "O":
+                        text[i] = "0"
+                    elif text[i] == "B":
+                        text[i] = "8"
+                for i in [0, 4, 5]:
+                    if text[i] == "4":
+                        text[i] = "A"
+                    elif text[i] == "8":
+                        text[i] = "B"
+                plates.add("".join(text))
 
-        max_len = max(len(text) for text in unique)
-        names = np.asarray(unique, dtype=f"S{max_len}")
-
-        return names
+        return np.asarray([json.dumps(list(plates)).encode("utf-8")])

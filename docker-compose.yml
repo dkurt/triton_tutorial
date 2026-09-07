@@ -4,6 +4,8 @@ services:
       context: .
       dockerfile: Dockerfile
     container_name: triton-minimal-demo
+    environment:
+      - HF_TOKEN=${HF_TOKEN:-}
     networks:
       - default
     command:
@@ -23,7 +25,7 @@ services:
       - "18000:8000"   # HTTP  (used by the clients)
       - "18001:8001"   # gRPC
       - "18002:8002"   # metrics
-    shm_size: 2gb
+    shm_size: 64gb
     gpus: all
 
 # Explicit subnet: this host's Docker daemon has exhausted all default address
