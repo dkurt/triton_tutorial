@@ -119,7 +119,7 @@ class TritonPythonModel:
         plates = set()
         for result in results:
             for text in result:
-                text = list(text.decode("utf-8").replace("[", "").replace("]", "").upper())
+                text = list(text.decode("utf-8").replace("[", "").replace("]", "").replace("I", "").replace("|", "").upper())
                 for i in [1, 2, 3]:
                     if text[i] == "O":
                         text[i] = "0"
